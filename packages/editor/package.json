@@ -1,6 +1,6 @@
 {
   "name": "@halo-dev/richtext-editor",
-  "version": "0.0.0-alpha.18-0",
+  "version": "0.0.0-alpha.18",
   "description": "",
   "files": [
     "dist"
