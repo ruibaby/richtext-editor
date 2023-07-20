@@ -1,16 +1,16 @@
 <script lang="ts" setup>
 import { type PropType, ref, watch } from "vue";
-import type { Item } from "./suggestion";
+import type { CommandMenuItem } from "@/types";
 import { i18n } from "@/locales";
 
 const props = defineProps({
   items: {
-    type: Array as PropType<Item[]>,
+    type: Array as PropType<CommandMenuItem[]>,
     required: true,
   },
 
   command: {
-    type: Function as PropType<(item: Item) => void>,
+    type: Function as PropType<(item: CommandMenuItem) => void>,
     required: true,
   },
 });
@@ -103,7 +103,7 @@ defineExpose({
     </template>
     <div v-else class="command-empty">
       <span>
-        {{ i18n.global.t("core.extensions.commands_menu.no_results") }}
+        {{ i18n.global.t("editor.extensions.commands_menu.no_results") }}
       </span>
     </div>
   </div>

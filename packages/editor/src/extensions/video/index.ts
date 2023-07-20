@@ -1,6 +1,15 @@
-import { mergeAttributes, Node, nodeInputRule } from "@tiptap/core";
+import type { ExtensionOptions } from "@/types";
+import {
+  Editor,
+  mergeAttributes,
+  Node,
+  nodeInputRule,
+  type Range,
+} from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
+import { markRaw } from "vue";
 import VideoView from "./VideoView.vue";
+import MdiVideo from "~icons/mdi/video";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -10,7 +19,7 @@ declare module "@tiptap/core" {
   }
 }
 
-const Video = Node.create({
+const Video = Node.create<ExtensionOptions>({
   name: "video",
 
   inline() {
@@ -97,10 +106,7 @@ const Video = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [
-      "video",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-    ];
+    return ["video", mergeAttributes(HTMLAttributes)];
   },
 
   addCommands() {
@@ -130,6 +136,31 @@ const Video = Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(VideoView);
+  },
+
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      getCommandMenuItems() {
+        return {
+          priority: 100,
+          icon: markRaw(MdiVideo),
+          title: "editor.extensions.commands_menu.video",
+          keywords: ["video", "shipin"],
+          command: ({ editor, range }: { editor: Editor; range: Range }) => {
+            editor
+              .chain()
+              .focus()
+              .deleteRange(range)
+              .insertContent([
+                { type: "video", attrs: { src: "" } },
+                { type: "paragraph", content: "" },
+              ])
+              .run();
+          },
+        };
+      },
+    };
   },
 });
 

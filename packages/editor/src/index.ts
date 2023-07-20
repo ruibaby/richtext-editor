@@ -3,6 +3,7 @@ import RichTextEditor from "./components/Editor.vue";
 import "./styles/index.scss";
 import "./styles/tailwind.css";
 import "floating-vue/dist/style.css";
+import "github-markdown-css/github-markdown-light.css";
 import "highlight.js/styles/github-dark.css";
 
 const plugin: Plugin = {
@@ -17,5 +18,4 @@ export { RichTextEditor };
 
 export * from "@tiptap/vue-3";
 export * from "./extensions";
-export * from "./menus";
-export * from "./extensions/commands-menu";
+export * from "./components";
