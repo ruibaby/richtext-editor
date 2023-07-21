@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 importers:
 
   .:
@@ -99,6 +103,9 @@ importers:
 
   packages/editor:
     dependencies:
+      '@ckpack/vue-color':
+        specifier: ^1.5.0
+        version: 1.5.0(vue@3.2.45)
       '@tiptap/core':
         specifier: ^2.0.3
         version: 2.0.3(@tiptap/pm@2.0.3)
@@ -120,6 +127,9 @@ importers:
       '@tiptap/extension-code-block-lowlight':
         specifier: ^2.0.3
         version: 2.0.3(@tiptap/core@2.0.3)(@tiptap/extension-code-block@2.0.3)(@tiptap/pm@2.0.3)
+      '@tiptap/extension-color':
+        specifier: ^2.0.4
+        version: 2.0.4(@tiptap/core@2.0.3)(@tiptap/extension-text-style@2.0.4)
       '@tiptap/extension-document':
         specifier: ^2.0.3
         version: 2.0.3(@tiptap/core@2.0.3)
@@ -198,6 +208,9 @@ importers:
       '@tiptap/extension-text-align':
         specifier: ^2.0.3
         version: 2.0.3(@tiptap/core@2.0.3)
+      '@tiptap/extension-text-style':
+        specifier: ^2.0.4
+        version: 2.0.4(@tiptap/core@2.0.3)
       '@tiptap/extension-underline':
         specifier: ^2.0.3
         version: 2.0.3(@tiptap/core@2.0.3)
@@ -222,6 +235,9 @@ importers:
       prosemirror-model:
         specifier: ^1.19.2
         version: 1.19.2
+      prosemirror-state:
+        specifier: ^1.4.3
+        version: 1.4.3
       prosemirror-view:
         specifier: ^1.31.4
         version: 1.31.4
@@ -587,6 +603,22 @@ packages:
       '@babel/helper-string-parser': 7.19.4
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+
+  /@ckpack/vue-color@1.5.0(vue@3.2.45):
+    resolution: {integrity: sha512-dj1zXVyay2m4LdlLJCQSdIS2FYwUl77BZqyKmUXiehyqjCP0bGYnPcL38lrShzYUc2FdkYQX8ANZZjRahd4PQw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      '@ctrl/tinycolor': 3.6.0
+      material-colors: 1.2.6
+      vue: 3.2.45
+    dev: false
+
+  /@ctrl/tinycolor@3.6.0:
+    resolution: {integrity: sha512-/Z3l6pXthq0JvMYdUFyX9j0MaCltlIn6mfh9jLyQwg5aPKxkyNa0PTHtU1AlFXLNk55ZuAeJRcpvq+tmLfKmaQ==}
+    engines: {node: '>=10'}
+    dev: false
 
   /@esbuild/android-arm64@0.17.18:
     resolution: {integrity: sha512-/iq0aK0eeHgSC3z55ucMAHO05OIqmQehiGay8eP5l/5l+iEr4EIbh4/MI8xD9qRFjqzgkc0JkX0LculNC9mXBw==}
@@ -1377,8 +1409,8 @@ packages:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
     dev: false
 
-  /@tiptap/extension-bubble-menu@2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3):
-    resolution: {integrity: sha512-lPt1ELrYCuoQrQEUukqjp9xt38EwgPUwaKHI3wwt2Rbv+C6q1gmRsK1yeO/KqCNmFxNqF2p9ZF9srOnug/RZDQ==}
+  /@tiptap/extension-bubble-menu@2.0.4(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3):
+    resolution: {integrity: sha512-+cRZwj0YINNNDElSAiX1pvY2K98S2j9MQW2dXV5oLqsJhqGPZsKxVo8I1u7ZtqUla3QE1V18RYPAzVgTiMRkBg==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
       '@tiptap/pm': ^2.0.0
@@ -1424,6 +1456,16 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
+    dev: false
+
+  /@tiptap/extension-color@2.0.4(@tiptap/core@2.0.3)(@tiptap/extension-text-style@2.0.4):
+    resolution: {integrity: sha512-7Eb5Gk9v3sj2i1Q8dfqmpnc5aDPC/t0ZEsSLRi4C6SNo1nBeUxteXzpzxWwYjTvK+Um40STR89Z6PY14FIYXSA==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/extension-text-style': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
+      '@tiptap/extension-text-style': 2.0.4(@tiptap/core@2.0.3)
     dev: false
 
   /@tiptap/extension-document@2.0.3(@tiptap/core@2.0.3):
@@ -1654,6 +1696,14 @@ packages:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
     dev: false
 
+  /@tiptap/extension-text-style@2.0.4(@tiptap/core@2.0.3):
+    resolution: {integrity: sha512-HQk8c7HasDdeAJxlHrztkgprxocZecZVUMlvPvFAhkq8E/5+nfmr/Gm9qudiStEARZrIYBATNA2PbnQuIGMx3A==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
+    dev: false
+
   /@tiptap/extension-text@2.0.3(@tiptap/core@2.0.3):
     resolution: {integrity: sha512-LvzChcTCcPSMNLUjZe/A9SHXWGDHtvk73fR7CBqAeNU0MxhBPEBI03GFQ6RzW3xX0CmDmjpZoDxFMB+hDEtW1A==}
     peerDependencies:
@@ -1689,9 +1739,9 @@ packages:
       prosemirror-model: 1.19.2
       prosemirror-schema-basic: 1.2.1
       prosemirror-schema-list: 1.2.2
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-tables: 1.3.2
-      prosemirror-trailing-node: 2.0.3(prosemirror-model@1.19.2)(prosemirror-state@1.4.1)(prosemirror-view@1.31.4)
+      prosemirror-trailing-node: 2.0.3(prosemirror-model@1.19.2)(prosemirror-state@1.4.3)(prosemirror-view@1.31.4)
       prosemirror-transform: 1.7.0
       prosemirror-view: 1.31.4
     dev: false
@@ -1714,7 +1764,7 @@ packages:
       vue: ^3.0.0
     dependencies:
       '@tiptap/core': 2.0.3(@tiptap/pm@2.0.3)
-      '@tiptap/extension-bubble-menu': 2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3)
+      '@tiptap/extension-bubble-menu': 2.0.4(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3)
       '@tiptap/extension-floating-menu': 2.0.3(@tiptap/core@2.0.3)(@tiptap/pm@2.0.3)
       '@tiptap/pm': 2.0.3(@tiptap/core@2.0.3)
       vue: 3.2.45
@@ -5027,6 +5077,10 @@ packages:
       uc.micro: 1.0.6
     dev: false
 
+  /material-colors@1.2.6:
+    resolution: {integrity: sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==}
+    dev: false
+
   /mdurl@1.0.1:
     resolution: {integrity: sha512-/sKlQJCBYVY9Ers9hqzKou4H6V5UWc/M59TH2dvkt+84itfnq7uFOMLpOiOS4ujvHP4etln18fmIxA5R5fll0g==}
     dev: false
@@ -5754,21 +5808,21 @@ packages:
   /prosemirror-collab@1.3.0:
     resolution: {integrity: sha512-+S/IJ69G2cUu2IM5b3PBekuxs94HO1CxJIWOFrLQXUaUDKL/JfBx+QcH31ldBlBXyDEUl+k3Vltfi1E1MKp2mA==}
     dependencies:
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
     dev: false
 
   /prosemirror-commands@1.3.1:
     resolution: {integrity: sha512-XTporPgoECkOQACVw0JTe3RZGi+fls3/byqt+tXwGTkD7qLuB4KdVrJamDMJf4kfKga3uB8hZ+kUUyZ5oWpnfg==}
     dependencies:
       prosemirror-model: 1.19.2
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-transform: 1.7.0
     dev: false
 
   /prosemirror-dropcursor@1.5.0:
     resolution: {integrity: sha512-vy7i77ddKyXlu8kKBB3nlxLBnsWyKUmQIPB5x8RkYNh01QNp/qqGmdd5yZefJs0s3rtv5r7Izfu2qbtr+tYAMQ==}
     dependencies:
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-transform: 1.7.0
       prosemirror-view: 1.31.4
     dev: false
@@ -5778,14 +5832,14 @@ packages:
     dependencies:
       prosemirror-keymap: 1.2.0
       prosemirror-model: 1.19.2
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-view: 1.31.4
     dev: false
 
   /prosemirror-history@1.3.0:
     resolution: {integrity: sha512-qo/9Wn4B/Bq89/YD+eNWFbAytu6dmIM85EhID+fz9Jcl9+DfGEo8TTSrRhP15+fFEoaPqpHSxlvSzSEbmlxlUA==}
     dependencies:
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-transform: 1.7.0
       rope-sequence: 1.3.3
     dev: false
@@ -5793,14 +5847,14 @@ packages:
   /prosemirror-inputrules@1.2.0:
     resolution: {integrity: sha512-eAW/M/NTSSzpCOxfR8Abw6OagdG0MiDAiWHQMQveIsZtoKVYzm0AflSPq/ymqJd56/Su1YPbwy9lM13wgHOFmQ==}
     dependencies:
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-transform: 1.7.0
     dev: false
 
   /prosemirror-keymap@1.2.0:
     resolution: {integrity: sha512-TdSfu+YyLDd54ufN/ZeD1VtBRYpgZnTPnnbY+4R08DDgs84KrIPEPbJL8t1Lm2dkljFx6xeBE26YWH3aIzkPKg==}
     dependencies:
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       w3c-keyname: 2.2.6
     dev: false
 
@@ -5817,7 +5871,7 @@ packages:
       crelt: 1.0.5
       prosemirror-commands: 1.3.1
       prosemirror-history: 1.3.0
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
     dev: false
 
   /prosemirror-model@1.19.2:
@@ -5836,15 +5890,16 @@ packages:
     resolution: {integrity: sha512-rd0pqSDp86p0MUMKG903g3I9VmElFkQpkZ2iOd3EOVg1vo5Cst51rAsoE+5IPy0LPXq64eGcCYlW1+JPNxOj2w==}
     dependencies:
       prosemirror-model: 1.19.2
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-transform: 1.7.0
     dev: false
 
-  /prosemirror-state@1.4.1:
-    resolution: {integrity: sha512-U/LBDW2gNmVa07sz/D229XigSdDQ5CLFwVB1Vb32MJbAHHhWe/6pOc721faI17tqw4pZ49i1xfY/jEZ9tbIhPg==}
+  /prosemirror-state@1.4.3:
+    resolution: {integrity: sha512-goFKORVbvPuAQaXhpbemJFRKJ2aixr+AZMGiquiqKxaucC6hlpHNZHWgz5R7dS4roHiwq9vDctE//CZ++o0W1Q==}
     dependencies:
       prosemirror-model: 1.19.2
       prosemirror-transform: 1.7.0
+      prosemirror-view: 1.31.4
     dev: false
 
   /prosemirror-tables@1.3.2:
@@ -5852,12 +5907,12 @@ packages:
     dependencies:
       prosemirror-keymap: 1.2.0
       prosemirror-model: 1.19.2
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-transform: 1.7.0
       prosemirror-view: 1.31.4
     dev: false
 
-  /prosemirror-trailing-node@2.0.3(prosemirror-model@1.19.2)(prosemirror-state@1.4.1)(prosemirror-view@1.31.4):
+  /prosemirror-trailing-node@2.0.3(prosemirror-model@1.19.2)(prosemirror-state@1.4.3)(prosemirror-view@1.31.4):
     resolution: {integrity: sha512-lGrjMrn97KWkjQSW/FjdvnhJmqFACmQIyr6lKYApvHitDnKsCoZz6XzrHB7RZYHni/0NxQmZ01p/2vyK2SkvaA==}
     peerDependencies:
       prosemirror-model: ^1
@@ -5869,7 +5924,7 @@ packages:
       '@remirror/core-helpers': 2.0.1
       escape-string-regexp: 4.0.0
       prosemirror-model: 1.19.2
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-view: 1.31.4
     dev: false
 
@@ -5883,7 +5938,7 @@ packages:
     resolution: {integrity: sha512-nJzH2LpYbonSTYFqQ1BUdEhbd1WPN/rp/K9T9qxBEYpgg3jK3BvEUCR45Ymc9IHpO0m3nBJwPm19RBxZdoBVuw==}
     dependencies:
       prosemirror-model: 1.19.2
-      prosemirror-state: 1.4.1
+      prosemirror-state: 1.4.3
       prosemirror-transform: 1.7.0
     dev: false
 
