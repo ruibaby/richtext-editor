@@ -78,6 +78,7 @@ editor:
     superscript: Super Script
     subscript: Sub Script
     codeblock: Code block
+    image: Image
     heading:
       title: Text type
       paragraph: Paragraph
@@ -104,3 +105,5 @@ editor:
       edit_link: Edit link
       refresh: Refresh
       restore_default: Restore default
+    text:
+      default: Default

@@ -78,6 +78,7 @@ editor:
     superscript: 上角标
     subscript: 下角标
     codeblock: 代码块
+    image: 图片
     heading:
       title: 文本类型
       paragraph: 普通文本
@@ -104,3 +105,5 @@ editor:
       edit_link: 修改链接
       refresh: 刷新
       restore_default: 恢复为默认
+    text:
+      default: 默认
