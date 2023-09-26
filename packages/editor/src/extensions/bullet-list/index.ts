@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/vue-3";
+import type { Editor, Range } from "@tiptap/core";
 import TiptapBulletList from "@tiptap/extension-bullet-list";
 import type { BulletListOptions } from "@tiptap/extension-bullet-list";
 import ExtensionListItem from "@tiptap/extension-list-item";
@@ -35,6 +35,22 @@ const BulletList = TiptapBulletList.extend<
           keywords: ["bulletlist", "wuxuliebiao"],
           command: ({ editor, range }: { editor: Editor; range: Range }) => {
             editor.chain().focus().deleteRange(range).toggleBulletList().run();
+          },
+        };
+      },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }) {
+            let container = dom;
+            while (container && !(container.tagName === "LI")) {
+              container = container.parentElement as HTMLElement;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                x: -12,
+              },
+            };
           },
         };
       },

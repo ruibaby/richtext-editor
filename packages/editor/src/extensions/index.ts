@@ -23,7 +23,6 @@ import ExtensionGapcursor from "@tiptap/extension-gapcursor";
 import ExtensionHardBreak from "@tiptap/extension-hard-break";
 import ExtensionHorizontalRule from "@tiptap/extension-horizontal-rule";
 import ExtensionDocument from "@tiptap/extension-document";
-import ExtensionText from "@tiptap/extension-text";
 import ExtensionPlaceholder from "@tiptap/extension-placeholder";
 import { i18n } from "@/locales";
 
@@ -35,6 +34,11 @@ import ExtensionVideo from "./video";
 import ExtensionAudio from "./audio";
 import ExtensionImage from "./image";
 import ExtensionIndent from "./indent";
+import { ExtensionColumns, ExtensionColumn } from "./columns";
+import ExtensionText from "./text";
+import ExtensionDraggable from "./draggable";
+import ExtensionNodeSelected from "./node-selected";
+import ExtensionTrailingNode from "./trailing-node";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -42,7 +46,11 @@ const allExtensions = [
   ExtensionBulletList,
   ExtensionCode,
   ExtensionDocument,
-  ExtensionDropcursor,
+  ExtensionDropcursor.configure({
+    width: 2,
+    class: "dropcursor",
+    color: "skyblue",
+  }),
   ExtensionGapcursor,
   ExtensionHardBreak,
   ExtensionHeading,
@@ -83,6 +91,10 @@ const allExtensions = [
   ExtensionVideo,
   ExtensionAudio,
   ExtensionIndent,
+  ExtensionColumns,
+  ExtensionColumn,
+  ExtensionNodeSelected,
+  ExtensionTrailingNode,
 ];
 
 export {
@@ -121,4 +133,9 @@ export {
   ExtensionColor,
   ExtensionFontSize,
   ExtensionIndent,
+  ExtensionDraggable,
+  ExtensionColumns,
+  ExtensionColumn,
+  ExtensionNodeSelected,
+  ExtensionTrailingNode,
 };

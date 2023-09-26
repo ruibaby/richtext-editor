@@ -7,17 +7,19 @@ editor:
       add: 插入表格
       add_column_before: 向前插入列
       add_column_after: 向后插入列
-      toggle_header_column: 显示/隐藏列表头
       delete_column: 删除当前列
       add_row_before: 向上插入行
       add_row_after: 向下插入行
-      toggle_header_row: 显示/隐藏行表头
+      toggle_header_column: 设置/取消首列表头
+      toggle_header_row: 设置/取消首行表头
+      toggle_header_cell: 设置/取消当前单元格为表头
       delete_row: 删除当前行
       merge_cells: 合并单元格
       split_cell: 分割单元格
       delete_table: 删除表格
   extensions:
     commands_menu:
+      columns: 分栏卡片
       iframe: 嵌入网页
       image: 图片
       video: 视频
@@ -50,6 +52,7 @@ editor:
       restore_size: 恢复原始尺寸
       edit_link: 修改链接
       edit_alt: 修改图片 alt 属性
+      edit_href: 修改图片跳转链接
     video:
       disable_controls: 隐藏控制面板
       enable_controls: 显示控制面板
@@ -62,6 +65,10 @@ editor:
       large_size: 大尺寸
     highlight:
       unset: 移除高亮颜色
+    columns:
+      add_column_before: 向前插入列
+      add_column_after: 向后插入列
+      delete_column: 删除当前列
   components:
     color_picker:
       more_color: 更多颜色
@@ -101,6 +108,7 @@ editor:
     placeholder:
       link_input: 输入链接，按回车确定
       alt_input: 输入图片 alt 属性值，按回车确认
+      alt_href: 输入图片跳转链接，按回车确认
     button:
       new_line: 换行
       delete: 删除

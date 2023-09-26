@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/vue-3";
+import type { Editor, Range } from "@tiptap/core";
 import TiptapOrderedList from "@tiptap/extension-ordered-list";
 import type { OrderedListOptions } from "@tiptap/extension-ordered-list";
 import ExtensionListItem from "@tiptap/extension-list-item";
@@ -35,6 +35,23 @@ const OrderedList = TiptapOrderedList.extend<
           keywords: ["orderedlist", "youxuliebiao"],
           command: ({ editor, range }: { editor: Editor; range: Range }) => {
             editor.chain().focus().deleteRange(range).toggleOrderedList().run();
+          },
+        };
+      },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }) {
+            let container = dom;
+            while (container && !(container.tagName === "LI")) {
+              container = container.parentElement as HTMLElement;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                x: -16,
+                y: -1,
+              },
+            };
           },
         };
       },

@@ -1,6 +1,8 @@
-import type { Editor, Range } from "@tiptap/vue-3";
+import type { Editor, Range } from "@tiptap/core";
+import type { Node, ResolvedPos, Slice } from "@tiptap/pm/model";
+import type { EditorState } from "@tiptap/pm/state";
+import type { EditorView } from "@tiptap/pm/view";
 import type { Component } from "vue";
-
 export interface ToolbarItem {
   priority: number;
   component: Component;
@@ -15,19 +17,40 @@ export interface ToolbarItem {
   children?: ToolbarItem[];
 }
 
-export interface BubbleItem {
-  priority: number;
-  component: Component;
-  props: {
+interface BubbleMenuProps {
+  pluginKey?: string;
+  editor?: Editor;
+  shouldShow: (props: {
     editor: Editor;
-    isActive: boolean;
-    visible?: boolean;
-    icon?: Component;
-    title?: string;
-    action?: () => void;
-  };
+    state: EditorState;
+    node?: HTMLElement;
+    view?: EditorView;
+    oldState?: EditorState;
+    from?: number;
+    to?: number;
+  }) => boolean;
+  tippyOptions?: Record<string, unknown>;
+  getRenderContainer?: (node: HTMLElement) => HTMLElement;
+  defaultAnimation?: boolean;
 }
 
+export interface NodeBubbleMenu extends BubbleMenuProps {
+  component?: Component;
+  items?: BubbleItem[];
+}
+
+export interface BubbleItem {
+  priority: number;
+  component?: Component;
+  props?: {
+    isActive?: ({ editor }: { editor: Editor }) => boolean;
+    visible?: ({ editor }: { editor: Editor }) => boolean;
+    icon?: Component;
+    iconStyle?: string;
+    title?: string;
+    action?: ({ editor }: { editor: Editor }) => Component | void;
+  };
+}
 export interface ToolboxItem {
   priority: number;
   component: Component;
@@ -49,17 +72,15 @@ export interface ExtensionOptions {
 
   getCommandMenuItems?: () => CommandMenuItem | CommandMenuItem[];
 
-  getBubbleItems?: ({
-    editor,
-  }: {
-    editor: Editor;
-  }) => BubbleItem | BubbleItem[];
+  getBubbleMenu?: ({ editor }: { editor: Editor }) => NodeBubbleMenu;
 
   getToolboxItems?: ({
     editor,
   }: {
     editor: Editor;
   }) => ToolboxItem | ToolboxItem[];
+
+  getDraggable?: ({ editor }: { editor: Editor }) => DraggableItem | boolean;
 }
 
 export interface CommandMenuItem {
@@ -68,4 +89,40 @@ export interface CommandMenuItem {
   title: string;
   keywords: string[];
   command: ({ editor, range }: { editor: Editor; range: Range }) => void;
+}
+
+export interface DragSelectionNode {
+  $pos?: ResolvedPos;
+  node?: Node;
+  el: HTMLElement;
+  nodeOffset?: number;
+  dragDomOffset?: {
+    x?: number;
+    y?: number;
+  };
+}
+
+export interface DraggableItem {
+  getRenderContainer?: ({
+    dom,
+    view,
+  }: {
+    dom: HTMLElement;
+    view: EditorView;
+  }) => DragSelectionNode;
+  handleDrop?: ({
+    view,
+    event,
+    slice,
+    insertPos,
+    node,
+  }: {
+    view: EditorView;
+    event: DragEvent;
+    slice: Slice;
+    insertPos: number;
+    node: Node;
+  }) => boolean | void;
+  // allow drag-and-drop query propagation downward
+  allowPropagationDownward?: boolean;
 }

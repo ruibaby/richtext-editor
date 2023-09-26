@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/vue-3";
+import type { Editor, Range } from "@tiptap/core";
 import TiptapTaskList from "@tiptap/extension-task-list";
 import type { TaskListOptions } from "@tiptap/extension-task-list";
 import ExtensionTaskItem from "@tiptap/extension-task-item";
@@ -33,6 +33,22 @@ const TaskList = TiptapTaskList.extend<ExtensionOptions & TaskListOptions>({
           keywords: ["tasklist", "renwuliebiao"],
           command: ({ editor, range }: { editor: Editor; range: Range }) => {
             editor.chain().focus().deleteRange(range).toggleTaskList().run();
+          },
+        };
+      },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }) {
+            let container = dom;
+            while (container && !(container.tagName === "LI")) {
+              container = container.parentElement as HTMLElement;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                y: -1,
+              },
+            };
           },
         };
       },

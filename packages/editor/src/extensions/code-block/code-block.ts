@@ -1,9 +1,11 @@
 import {
   Editor,
-  VueNodeViewRenderer,
   type Range,
   type CommandProps,
-} from "@tiptap/vue-3";
+  isActive,
+  findParentNode,
+} from "@tiptap/core";
+import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import type { CodeBlockLowlightOptions } from "@tiptap/extension-code-block-lowlight";
 import CodeBlockViewRenderer from "./CodeBlockViewRenderer.vue";
@@ -11,9 +13,10 @@ import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
-import BubbleItem from "@/components/bubble/BubbleItem.vue";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
-import { TextSelection, type Transaction } from "prosemirror-state";
+import { EditorState, TextSelection, type Transaction } from "@tiptap/pm/state";
+import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
+import { deleteNode } from "@/utils";
 
 export interface CustomCodeBlockLowlightOptions
   extends CodeBlockLowlightOptions {
@@ -71,6 +74,22 @@ const updateIndent = (tr: Transaction, type: IndentType): Transaction => {
   return tr;
 };
 
+const getRenderContainer = (node: HTMLElement) => {
+  let container = node;
+  // 文本节点
+  if (container.nodeName === "#text") {
+    container = node.parentElement as HTMLElement;
+  }
+  while (
+    container &&
+    container.classList &&
+    !container.classList.contains("code-node")
+  ) {
+    container = container.parentElement as HTMLElement;
+  }
+  return container;
+};
+
 export default CodeBlockLowlight.extend<
   CustomCodeBlockLowlightOptions & CodeBlockLowlightOptions
 >({
@@ -109,13 +128,33 @@ export default CodeBlockLowlight.extend<
         if (this.editor.isActive("codeBlock")) {
           return this.editor.chain().focus().codeIndent().run();
         }
-        return;
+        return false;
       },
       "Shift-Tab": () => {
         if (this.editor.isActive("codeBlock")) {
           return this.editor.chain().focus().codeOutdent().run();
         }
-        return;
+        return false;
+      },
+      "Mod-a": () => {
+        if (this.editor.isActive("codeBlock")) {
+          const { tr, selection } = this.editor.state;
+          const codeBlack = findParentNode(
+            (node) => node.type.name === CodeBlockLowlight.name
+          )(selection);
+          if (!codeBlack) {
+            return false;
+          }
+          const head = codeBlack.start;
+          const anchor = codeBlack.start + codeBlack.node.nodeSize - 1;
+          const $head = tr.doc.resolve(head);
+          const $anchor = tr.doc.resolve(anchor);
+          this.editor.view.dispatch(
+            tr.setSelection(new TextSelection($head, $anchor))
+          );
+          return true;
+        }
+        return false;
       },
     };
   },
@@ -129,19 +168,6 @@ export default CodeBlockLowlight.extend<
         return {
           priority: 160,
           component: markRaw(ToolbarItem),
-          props: {
-            editor,
-            isActive: editor.isActive("codeBlock"),
-            icon: markRaw(MdiCodeBracesBox),
-            title: i18n.global.t("editor.common.codeblock"),
-            action: () => editor.chain().focus().toggleCodeBlock().run(),
-          },
-        };
-      },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 90,
-          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("codeBlock"),
@@ -177,6 +203,37 @@ export default CodeBlockLowlight.extend<
             },
           },
         ];
+      },
+      getBubbleMenu() {
+        return {
+          pluginKey: "codeBlockBubbleMenu",
+          shouldShow: ({ state }: { state: EditorState }) => {
+            return isActive(state, CodeBlockLowlight.name);
+          },
+          getRenderContainer: (node: HTMLElement) => {
+            return getRenderContainer(node);
+          },
+          items: [
+            {
+              priority: 10,
+              props: {
+                icon: markRaw(MdiDeleteForeverOutline),
+                title: i18n.global.t("editor.common.button.delete"),
+                action: ({ editor }: { editor: Editor }) =>
+                  deleteNode(CodeBlockLowlight.name, editor),
+              },
+            },
+          ],
+        };
+      },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }: { dom: HTMLElement }) {
+            return {
+              el: getRenderContainer(dom),
+            };
+          },
+        };
       },
     };
   },

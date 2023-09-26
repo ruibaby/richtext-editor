@@ -43,6 +43,11 @@ import {
   RichTextEditor,
   useEditor,
   ExtensionIndent,
+  ExtensionDraggable,
+  ExtensionColumns,
+  ExtensionColumn,
+  ExtensionNodeSelected,
+  ExtensionTrailingNode,
 } from "@halo-dev/richtext-editor";
 
 const content = useLocalStorage("content", "");
@@ -55,7 +60,11 @@ const editor = useEditor({
     ExtensionBulletList,
     ExtensionCode,
     ExtensionDocument,
-    ExtensionDropcursor,
+    ExtensionDropcursor.configure({
+      width: 2,
+      class: "dropcursor",
+      color: "skyblue",
+    }),
     ExtensionGapcursor,
     ExtensionHardBreak,
     ExtensionHeading,
@@ -98,6 +107,11 @@ const editor = useEditor({
     ExtensionColor,
     ExtensionFontSize,
     ExtensionIndent,
+    ExtensionDraggable,
+    ExtensionColumns,
+    ExtensionColumn,
+    ExtensionNodeSelected,
+    ExtensionTrailingNode,
   ],
   onUpdate: () => {
     content.value = editor.value?.getHTML() + "";

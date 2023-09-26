@@ -1,5 +1,10 @@
-import { VueRenderer, type AnyExtension, type Range } from "@tiptap/vue-3";
-import { Editor, Extension } from "@tiptap/vue-3";
+import {
+  Extension,
+  type Editor,
+  type AnyExtension,
+  type Range,
+} from "@tiptap/core";
+import { VueRenderer } from "@tiptap/vue-3";
 import Suggestion from "@tiptap/suggestion";
 import type { CommandMenuItem } from "@/types";
 import type { Instance } from "tippy.js";
@@ -25,7 +30,7 @@ export default Extension.create({
         }: {
           editor: Editor;
           range: Range;
-          props: Record<string, any>;
+          props: CommandMenuItem;
         }) => {
           props.command({ editor, range });
         },
